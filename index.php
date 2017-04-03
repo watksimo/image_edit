@@ -61,13 +61,12 @@
                         <h3 class="panel-title">Image Uploader</h3>
                     </div>
                     <div class="panel-body">
-                      <form action="" method="POST" enctype="multipart/form-data">
+                      <form id="uload_form" method="POST" enctype="multipart/form-data">
                        <input type="file" name="image" />
-                       <input type="submit"/>
                       </form>
                     </div>
-                    <div class="panel-footer">
-
+                    <div class="panel-footer" align="center">
+                      <button type="button" id="uload">Upload New Image</button>
                     </div>
                 </div>
 
@@ -82,16 +81,19 @@
                       <h3 class="panel-title">Image Downloader</h3>
                   </div>
                   <div class="panel-body">
-                    <select name="image_list" id="image_list">
-                      <option></option>
-          <?php
-                      foreach(glob(dirname(__FILE__) . '/images/*') as $filename){
-                         $filename = basename($filename);
-                         echo "<option value='images/" . $filename . "'>".$filename."</option>";
-                      }
-          ?>
+                    <div class="form-group">
+                      <label for="new_width">Image</label>
+                      <select name="image_list" id="image_list">
+                        <option></option>
+            <?php
+                        foreach(glob(dirname(__FILE__) . '/images/*') as $filename){
+                           $filename = basename($filename);
+                           echo "<option value='images/" . $filename . "'>".$filename."</option>";
+                        }
+            ?>
 
-                    </select>
+                      </select>
+                    </div>
 
                     <div class="form-group">
                       <label for="new_width">New Width</label>
@@ -104,7 +106,7 @@
                     </div>
                   </div>
 
-                  <div class="panel-footer">
+                  <div class="panel-footer" align="center">
                     <button type="button" id="dload">Download New Image</button>
                   </div>
 
@@ -115,7 +117,7 @@
           </div>
 
           <div class="col-sm-8">
-            <div class="program_details_panel panel panel-default">
+            <div class="panel panel-default">
                 <div class="panel-heading" align="center">
                     <h3 class="panel-title">Preview</h3>
                 </div>
@@ -124,7 +126,8 @@
                   </div>
                 </div>
                 <div class="panel-footer" align="center">
-
+                  <div id="max_dims">
+                  </div>
                 </div>
             </div>
           </div>
@@ -138,5 +141,6 @@
 
   <footer>
     <script type="text/javascript" src="js/functions.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
   </footer>
 </html>

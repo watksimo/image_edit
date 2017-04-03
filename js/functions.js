@@ -13,6 +13,10 @@ $(function() {
                   + new_width + '&new_height=' + new_height);
   });
 
+  $('#uload').on('click', function() {
+    $('#uload_form').submit();
+  });
+
   $('#image_list').on('change', function() {
     var image_file = $('#image_list').val();
     console.log(image_file);
@@ -34,6 +38,10 @@ $(function() {
 
         $('#new_width').val(sel_img_width);
         $('#new_height').val(sel_img_height);
+
+        loadImage(image_file, $("#img_prev"));
+        $("#max_dims").html("Source Dimensions: " + sel_img_max_width +
+          "px X " + sel_img_max_height + "px");
     });
   });
 
@@ -62,3 +70,10 @@ $(function() {
   });
 
 });
+
+function loadImage(path, target) {
+    $('<img class="img-responsive" src="'+ path +'">').load(function() {
+      target.html("");
+      $(this).appendTo(target);
+    });
+}
