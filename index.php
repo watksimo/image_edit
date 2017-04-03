@@ -28,6 +28,11 @@
 ?>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Resizer</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -39,54 +44,92 @@
     <div class="container-fluid">
 
       <div class="header row">
-        <div class="col-sm-12">
+        <div class="col-sm-12" align="center">
             <h1>Image Resizer</h1>
         </div>
       </div>
 
-      <div class="content row">
+      <div class="content">
+        <div class="row">
+          <div class="col-sm-4">
 
-        <div class="program_details_panel panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Image Uploader</h3>
+            <div class="row">
+              <div class="col-sm-12">
+
+                <div class="program_details_panel panel panel-default">
+                    <div class="panel-heading" align="center">
+                        <h3 class="panel-title">Image Uploader</h3>
+                    </div>
+                    <div class="panel-body">
+                      <form action="" method="POST" enctype="multipart/form-data">
+                       <input type="file" name="image" />
+                       <input type="submit"/>
+                      </form>
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+                </div>
+
+              </div>
             </div>
-            <div class="panel-body">
-              <form action="" method="POST" enctype="multipart/form-data">
-               <input type="file" name="image" />
-               <input type="submit"/>
-              </form>
+
+            <div class="row">
+              <div class="col-sm-12">
+
+                <div class="program_details_panel panel panel-default">
+                  <div class="panel-heading" align="center">
+                      <h3 class="panel-title">Image Downloader</h3>
+                  </div>
+                  <div class="panel-body">
+                    <select name="image_list" id="image_list">
+                      <option></option>
+          <?php
+                      foreach(glob(dirname(__FILE__) . '/images/*') as $filename){
+                         $filename = basename($filename);
+                         echo "<option value='images/" . $filename . "'>".$filename."</option>";
+                      }
+          ?>
+
+                    </select>
+
+                    <div class="form-group">
+                      <label for="new_width">New Width</label>
+                      <input type='text' name='new_width' id='new_width'/>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="new_height">New Height</label>
+                      <input type='text' name='new_height' id='new_height'/>
+                    </div>
+                  </div>
+
+                  <div class="panel-footer">
+                    <button type="button" id="dload">Download New Image</button>
+                  </div>
+
+                </div>
+
+              </div>
             </div>
-            <div class="panel-footer">
+          </div>
 
+          <div class="col-sm-8">
+            <div class="program_details_panel panel panel-default">
+                <div class="panel-heading" align="center">
+                    <h3 class="panel-title">Preview</h3>
+                </div>
+                <div class="panel-body">
+                  <div id="img_prev">
+                  </div>
+                </div>
+                <div class="panel-footer" align="center">
+
+                </div>
             </div>
+          </div>
+
         </div>
-
-
-
-
-
-        <select name="image_list" id="image_list">
-          <option></option>
-    <?php
-          foreach(glob(dirname(__FILE__) . '/images/*') as $filename){
-             $filename = basename($filename);
-             echo "<option value='images/" . $filename . "'>".$filename."</option>";
-          }
-    ?>
-
-        </select>
-
-        <div class="form-group">
-          <label for="new_width">New Width</label>
-          <input type='text' name='new_width' id='new_width'/>
-        </div>
-
-        <div class="form-group">
-          <label for="new_height">New Height</label>
-          <input type='text' name='new_height' id='new_height'/>
-        </div>
-
-        <button type="button" id="dload">Download New Image</button>
 
       </div>
     </div>
@@ -94,66 +137,6 @@
   </body>
 
   <footer>
-    <script type='text/javascript'>
-        $(function() {
-          var sel_img_ratio = 0;
-          var sel_img_width = 0;
-          var sel_img_height = 0;
-          var sel_img_max_width = 0;
-          var sel_img_max_height = 0;
-
-          $('#dload').on('click', function() {
-            var image_file = $('#image_list').val();
-            var new_width = $('#new_width').val();
-            var new_height = $('#new_height').val();
-            window.open('download.php?image_file=' + image_file + '&new_width='
-                          + new_width + '&new_height=' + new_height);
-          });
-
-          $('#image_list').on('change', function() {
-            var image_file = $('#image_list').val();
-            console.log(image_file);
-
-            $.ajax({
-                type: "POST",
-                url: "get_dims.php",
-                data: {
-                  image_name: image_file
-                }
-            })
-            .done(function (dim_array) {
-                json_dim_array = JSON.parse(dim_array);
-                sel_img_max_width = json_dim_array['width'];
-                sel_img_max_height = json_dim_array['height'];
-                sel_img_width = json_dim_array['width'];
-                sel_img_height = json_dim_array['height'];
-                sel_img_ratio = sel_img_height/sel_img_width;
-
-                $('#new_width').val(sel_img_width);
-                $('#new_height').val(sel_img_height);
-            });
-          });
-
-          $('#new_width').keyup(function(event) {
-            if($('#new_width').is(":focus")) {
-              sel_img_width = $('#new_width').val();
-              sel_img_height = Math.round(sel_img_width * sel_img_ratio);
-              $('#new_height').val(sel_img_height);
-              console.log(sel_img_height);
-            }
-          });
-
-          $('#new_height').keyup(function(event) {
-            if($('#new_height').is(":focus")) {
-              sel_img_height = $('#new_height').val();
-              sel_img_width = Math.round(sel_img_height / sel_img_ratio);
-              $('#new_width').val(sel_img_width);
-              console.log(sel_img_width);
-            }
-          });
-
-        });
-
-    </script>
+    <script type="text/javascript" src="js/functions.js"></script>
   </footer>
 </html>
