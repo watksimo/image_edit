@@ -86,7 +86,7 @@
                       <select name="image_list" id="image_list">
                         <option></option>
             <?php
-                        foreach(glob(dirname(__FILE__) . '/images/*') as $filename){
+                        foreach(glob(dirname(__FILE__) . '/images/*') as $filename) {
                            $filename = basename($filename);
                            echo "<option value='images/" . $filename . "'>".$filename."</option>";
                         }
@@ -122,7 +122,7 @@
                     <h3 class="panel-title">Preview</h3>
                 </div>
                 <div class="panel-body">
-                  <div id="img_prev">
+                  <div id="img_prev" align="center">
                   </div>
                 </div>
                 <div class="panel-footer" align="center">

@@ -76,16 +76,18 @@ function loadImage(path, target) {
     $('<img class="img-responsive" id="img_prv_img" src="'+ path +'">').load(function() {
       target.html("");
       $(this).appendTo(target);
+      $("#img_prev").css("height", "auto");
 
-      var max_height = 100 - $("#page_title").height()/$("#top_container").height()*100 - 20;
+      var max_height = 100 - $("#page_title").height()/$(window).height()*100 - 20;
       $("#img_prev").css("max-height", max_height.toString() + "%");
-      var img_height = $("#img_prv_img").height()/$("#top_container").height()*100;
+      var img_height = $("#img_prv_img").height()/$(window).height()*100;
 
       console.log($("#img_prv_img").height());
       console.log(max_height + ", " + img_height);
 
       if(max_height < img_height) {
         $("#img_prev").css("height", "100%");
+        console.log("TALL");
       } else {
         $("#img_prev").css("height", "auto");
       }
