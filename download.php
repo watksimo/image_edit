@@ -3,12 +3,27 @@ $image_file = $_GET['image_file'];
 $new_width = $_GET['new_width'];
 $new_height = $_GET['new_height'];
 
-$dload_path = 'images/new_image.png';
-
 $image = new Imagick($image_file);
 $width = $image->getImageWidth();
 $height = $image->getImageHeight();
 $image->resizeImage($new_width, $new_height, 0, 1);
+$ext = "";
+switch ($image->getImageFormat()) {
+  case 'JPEG':
+    $ext = 'jpg';
+    break;
+  case 'PNG':
+    $ext = 'png';
+    break;
+  case 'TIFF':
+    $ext = 'tiff';
+    break;
+  case 'PDF':
+    $ext = 'pdf';
+    break;
+}
+
+$dload_path = 'images/new_image.' . $ext;
 $image->writeImage($dload_path);
 
 if (file_exists($dload_path)) {
