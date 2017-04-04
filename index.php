@@ -41,10 +41,10 @@
   </head>
   <body>
 
-    <div class="container-fluid">
+    <div id="top_container" class="container-fluid">
 
       <div class="header row">
-        <div class="col-sm-12" align="center">
+        <div id="page_title" class="col-sm-12" align="center">
             <h1>Image Resizer</h1>
         </div>
       </div>
@@ -77,7 +77,7 @@
               <div class="col-sm-12">
 
                 <div class="program_details_panel panel panel-default">
-                  <div class="panel-heading" align="center">
+                  <div id="img_prev_heading" class="panel-heading" align="center">
                       <h3 class="panel-title">Image Downloader</h3>
                   </div>
                   <div class="panel-body">
@@ -106,7 +106,7 @@
                     </div>
                   </div>
 
-                  <div class="panel-footer" align="center">
+                  <div id="img_prev_footer" class="panel-footer" align="center">
                     <button type="button" id="dload">Download New Image</button>
                   </div>
 
@@ -117,7 +117,7 @@
           </div>
 
           <div class="col-sm-8">
-            <div class="panel panel-default">
+            <div id="preview_panel" class="panel panel-default">
                 <div class="panel-heading" align="center">
                     <h3 class="panel-title">Preview</h3>
                 </div>

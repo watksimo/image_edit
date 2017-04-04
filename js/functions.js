@@ -42,6 +42,7 @@ $(function() {
         loadImage(image_file, $("#img_prev"));
         $("#max_dims").html("Source Dimensions: " + sel_img_max_width +
           "px X " + sel_img_max_height + "px");
+
     });
   });
 
@@ -72,8 +73,23 @@ $(function() {
 });
 
 function loadImage(path, target) {
-    $('<img class="img-responsive" src="'+ path +'">').load(function() {
+    $('<img class="img-responsive" id="img_prv_img" src="'+ path +'">').load(function() {
       target.html("");
       $(this).appendTo(target);
+
+      var max_height = 100 - $("#page_title").height()/$("#top_container").height()*100 - 20;
+      $("#img_prev").css("max-height", max_height.toString() + "%");
+      var img_height = $("#img_prv_img").height()/$("#top_container").height()*100;
+
+      console.log($("#img_prv_img").height());
+      console.log(max_height + ", " + img_height);
+
+      if(max_height < img_height) {
+        $("#img_prev").css("height", "100%");
+      } else {
+        $("#img_prev").css("height", "auto");
+      }
     });
+
+
 }
