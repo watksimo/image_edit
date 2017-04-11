@@ -1,0 +1,9 @@
+DROP TABLE image_edit.CollectionsLogos;
+DROP TABLE image_edit.UsersCollections;
+DROP TABLE image_edit.LogosFiles;
+DROP TABLE image_edit.UsersLogos;
+DROP TABLE image_edit.UsersClients;
+DROP TABLE image_edit.Collections;
+DROP TABLE image_edit.Files;
+DROP TABLE image_edit.Logos;
+DROP TABLE image_edit.Users;
